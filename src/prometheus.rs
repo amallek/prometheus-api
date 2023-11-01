@@ -115,7 +115,7 @@ impl Clone for StaticConfig {
 
 #[derive(Serialize, Deserialize, PartialEq, Debug)]
 struct TlsConfig {
-    insecure_skip_verify: Vec<bool>,
+    insecure_skip_verify: bool,
 }
 
 // Implement Clone

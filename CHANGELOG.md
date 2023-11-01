@@ -1,5 +1,7 @@
 # Changelog of Prometheus API
 
+## v0.0.2 Bug fix
+
 ## v0.0.1 Initial Version
 
 -   Added prometheus::info()

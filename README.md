@@ -141,5 +141,5 @@ Include an `x-auth` token in every API call to ensure authentication. The token 
 
 ## License
 
-This project is licensed under the terms of the MIT License (see LICENSE).
+This project is licensed under the terms of the MIT License (see LICENSE.)
 
