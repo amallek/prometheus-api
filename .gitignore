@@ -1,0 +1,6 @@
+target
+server.*
+Cargo.lock
+.git
+.vscode
+.DS_Store
