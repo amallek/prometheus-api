@@ -476,16 +476,35 @@ fn _config_get() -> Result<Config, ()> {
     Ok(parsed.unwrap())
 }
 
-fn _prometheus_reload() -> Result<(), std::io::Error> {
-    let status = std::process::Command::new("systemctl")
-        .arg("reload-or-restart")
+fn _prometheus_pid() -> Result<String, std::io::Error> {
+    let pid = std::process::Command::new("pgrep")
+        .arg("-x")
         .arg("prometheus")
+        .output()
+        .unwrap();
+    if !pid.status.success() {
+        return Err(std::io::Error::new(
+            std::io::ErrorKind::Other,
+            "Failed to get prometheus pid",
+        ));
+    }
+    Ok(String::from_utf8_lossy(&pid.stdout).to_string())
+}
+
+fn _prometheus_reload() -> Result<(), std::io::Error> {
+    let pid = _prometheus_pid();
+    if let Err(e) = pid {
+        return Err(e);
+    }
+    let status = std::process::Command::new("kill")
+        .arg("-SIGHUP")
+        .arg(pid.unwrap())
         .status()
         .unwrap();
     if !status.success() {
         return Err(std::io::Error::new(
             std::io::ErrorKind::Other,
-            "failed to reload prometheus",
+            "Failed to reload prometheus",
         ));
     }
     Ok(())
