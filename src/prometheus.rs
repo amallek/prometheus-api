@@ -498,7 +498,7 @@ fn _prometheus_reload() -> Result<(), std::io::Error> {
     }
     let status = std::process::Command::new("kill")
         .arg("-SIGHUP")
-        .arg(pid.unwrap())
+        .arg(pid.unwrap().trim())
         .status()
         .unwrap();
     if !status.success() {
